@@ -92,6 +92,38 @@
     <section id="content" class="container ">
         <div class="row">
             <div class="col-md-6">
+                {{-- Form Submit Data --}}
+                <div class="card mb-4">
+                     <div class="card-body">
+                         <h5 class="card-title">Form Pertanyaan</h5>
+                         @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('question.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                             </div>
+                            <div class="mb-3">
+                                <label for="pertanyaan" class="form-label">Pertanyaan</label>
+                                <textarea class="form-control" id="pertanyaan" name="pertanyaan" rows="4">{{ old('pertanyaan') }}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
+                        </form>
+                    </div>
+                </div>
                 {{-- About --}}
                 <div class="card mb-4">
                     <div class="card-body">
@@ -231,6 +263,28 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery CDN (Dibutuhkan untuk $.ajax) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Skrip Ajax (Materi Modul) -->
+    <script>
+        $.ajax({
+            url: 'auth/login',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                username: 'john',
+                password: '12345'
+            },
+            success: function(response) {
+                console.log('Data submitted successfully');
+            },
+            error: function(xhr, status, error) {
+                console.log('Error occurred: ' + error);
+            }
+        });
+    </script>
 </body>
 
 </html>
