@@ -12,8 +12,12 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $data['dataPelanggan'] = Pelanggan::all();
-        return view('admin.pelanggan.index',$data);
+        $dataPelanggan = Pelanggan::all();
+
+        return view(
+            'admin.pelanggan.index',
+            compact('dataPelanggan')
+        );
     }
 
     /**
@@ -29,18 +33,20 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'birthday'   => 'required|date',
+            'gender'     => 'required|in:Male,Female',
+            'email'      => 'required|email|max:255',
+            'phone'      => 'required|string|max:20',
+        ]);
 
-        $data['first_name'] = $request->first_name;
-		$data['last_name'] = $request->last_name;
-		$data['birthday'] = $request->birthday;
-		$data['gender'] = $request->gender;
-		$data['email'] = $request->email;
-		$data['phone'] = $request->phone;
-		
-		Pelanggan::create($data);
-		
-		return redirect()->route('pelanggan.index')->with('success','Penambahan Data Berhasil!');
+        Pelanggan::create($validated);
+
+        return redirect()
+            ->route('pelanggan.index')
+            ->with('success', 'Penambahan data pelanggan berhasil!');
     }
 
     /**
@@ -54,9 +60,15 @@ class PelangganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // Ambil data pelanggan berdasarkan primary key pelanggan_id
+        $dataPelanggan = Pelanggan::findOrFail($id);
+
+        // Kirim variabel dataPelanggan ke halaman edit
+        return view('admin.pelanggan.edit', [
+            'dataPelanggan' => $dataPelanggan
+        ]);
     }
 
     /**
@@ -64,7 +76,22 @@ class PelangganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'birthday'   => 'required|date',
+            'gender'     => 'required|in:Male,Female',
+            'email'      => 'required|email|max:255',
+            'phone'      => 'required|string|max:20',
+        ]);
+
+        $dataPelanggan = Pelanggan::findOrFail($id);
+
+        $dataPelanggan->update($validated);
+
+        return redirect()
+            ->route('pelanggan.index')
+            ->with('success', 'Perubahan data berhasil!');
     }
 
     /**
