@@ -9,6 +9,10 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelangganController;
 
+// Halaman destroy pelanggan
+Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])
+    ->name('pelanggan.destroy');
+
 // Halaman daftar pelanggan
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');

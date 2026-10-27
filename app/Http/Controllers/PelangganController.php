@@ -8,20 +8,17 @@ use App\Models\Pelanggan;
 class PelangganController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan seluruh data pelanggan.
      */
     public function index()
     {
         $dataPelanggan = Pelanggan::all();
 
-        return view(
-            'admin.pelanggan.index',
-            compact('dataPelanggan')
-        );
+        return view('admin.pelanggan.index', compact('dataPelanggan'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman tambah pelanggan.
      */
     public function create()
     {
@@ -29,7 +26,7 @@ class PelangganController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan data pelanggan baru.
      */
     public function store(Request $request)
     {
@@ -50,29 +47,27 @@ class PelangganController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail pelanggan.
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        // Ambil data pelanggan berdasarkan primary key pelanggan_id
         $dataPelanggan = Pelanggan::findOrFail($id);
 
-        // Kirim variabel dataPelanggan ke halaman edit
-        return view('admin.pelanggan.edit', [
-            'dataPelanggan' => $dataPelanggan
-        ]);
+        return view('admin.pelanggan.show', compact('dataPelanggan'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Menampilkan halaman edit pelanggan.
+     */
+    public function edit(string $id)
+    {
+        $dataPelanggan = Pelanggan::findOrFail($id);
+
+        return view('admin.pelanggan.edit', compact('dataPelanggan'));
+    }
+
+    /**
+     * Memperbarui data pelanggan.
      */
     public function update(Request $request, string $id)
     {
@@ -86,19 +81,23 @@ class PelangganController extends Controller
         ]);
 
         $dataPelanggan = Pelanggan::findOrFail($id);
-
         $dataPelanggan->update($validated);
 
         return redirect()
             ->route('pelanggan.index')
-            ->with('success', 'Perubahan data berhasil!');
+            ->with('success', 'Perubahan data pelanggan berhasil!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus data pelanggan.
      */
     public function destroy(string $id)
     {
-        //
+        $dataPelanggan = Pelanggan::findOrFail($id);
+        $dataPelanggan->delete();
+
+        return redirect()
+            ->route('pelanggan.index')
+            ->with('success', 'Data pelanggan berhasil dihapus!');
     }
 }
