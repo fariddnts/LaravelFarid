@@ -1,66 +1,15 @@
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Pelanggan</title>
-    <link rel="stylesheet" href="{{ asset('assets-admin/css/volt.css') }}">
-</head>
-<body>
+@extends('layout.admin.app')
 
-    <!-- Sidebar -->
-    <nav id="sidebarMenu"
-        class="sidebar d-lg-block bg-gray-800 text-white collapse"
-        data-simplebar>
-        <div class="sidebar-inner px-4 pt-3">
-            <ul class="nav flex-column pt-3">
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <span class="sidebar-text">Dashboard</span>
-                    </a>
-                </li>
+@section('title', 'Edit Pelanggan')
 
-                <li class="nav-item active">
-                    <a href="{{ route('pelanggan.index') }}" class="nav-link">
-                        <span class="sidebar-text">Pelanggan</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Konten utama -->
-    <main class="content">
-
-        <!-- Navbar atas -->
-        <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                    <h2 class="h5 mb-0 text-dark">Dashboard Pelanggan</h2>
-
-                    <a href="{{ route('pelanggan.index') }}"
-                    lass="btn btn-outline-gray">
-                        Kembali
-                    </a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="py-4">
-
-            <!-- Breadcrumb dan judul -->
+@section('content')
             <div class="mb-4">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('dashboard') }}">Dashboard</a>
-                        </li>
-
-                        <li class="breadcrumb-item">
                             <a href="{{ route('pelanggan.index') }}">Data Pelanggan</a>
                         </li>
-
                         <li class="breadcrumb-item active" aria-current="page">
                             Edit Data
                         </li>
@@ -225,21 +174,4 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- Footer -->
-        <footer class="text-center mt-4 mb-3">
-            <p class="text-muted">
-                © {{ date('Y') }} Data Pelanggan
-            </p>
-        </footer>
-
-    </main>
-
-    <!-- JavaScript -->
-    <script src="{{ asset('assets-admin/vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('assets-admin/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets-admin/js/volt.js') }}"></script>
-
-</body>
-</html>
+@endsection
