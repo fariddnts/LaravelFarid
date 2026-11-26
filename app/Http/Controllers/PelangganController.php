@@ -8,11 +8,22 @@ use App\Models\Pelanggan;
 class PelangganController extends Controller
 {
     /**
-     * Menampilkan seluruh data pelanggan.
+     * Menampilkan seluruh data pelanggan (dengan filter dan search via scope di Model).
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['dataPelanggan'] = Pelanggan::paginate(10);
+        // Daftar kolom yang boleh difilter
+        $filterableColumns = ['gender'];
+
+        // Daftar kolom yang dicari saat searching
+        $searchableColumns = ['first_name', 'last_name', 'email', 'phone'];
+
+        // withQueryString() agar filter & search tetap terbawa saat pindah halaman pagination
+        $data['dataPelanggan'] = Pelanggan::filter($request, $filterableColumns)
+            ->search($request, $searchableColumns)
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.pelanggan.index', $data);
     }
 
